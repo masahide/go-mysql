@@ -11,8 +11,8 @@ import (
 	"github.com/pingcap/errors"
 	"github.com/siddontang/go/hack"
 
-	. "github.com/go-mysql-org/go-mysql/mysql"
 	"github.com/go-mysql-org/go-mysql/utils"
+	. "github.com/masahide/go-mysql/mysql"
 )
 
 func (c *Conn) readUntilEOF() (err error) {

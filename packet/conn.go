@@ -14,8 +14,8 @@ import (
 	"sync"
 
 	"github.com/DataDog/zstd"
-	. "github.com/go-mysql-org/go-mysql/mysql"
 	"github.com/go-mysql-org/go-mysql/utils"
+	. "github.com/masahide/go-mysql/mysql"
 	"github.com/pingcap/errors"
 )
 
