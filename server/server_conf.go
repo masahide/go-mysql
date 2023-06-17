@@ -69,7 +69,7 @@ func NewDefaultServer() *Server {
 // if the supplied auth method is different from the server default.
 // And for TLS support, you can specify self-signed or CA-signed certificates and decide whether the client needs to provide
 // a signed or unsigned certificate to provide different level of security.
-func NewServer(serverVersion string, collationId uint8, defaultAuthMethod string, pubKey []byte, tlsConfig *tls.Config) *Server {
+func NewServer(serverVersion string, collationId uint8, defaultAuthMethod string, pubKey []byte, tlsConfig *tls.Config, options ...func(*Server)) *Server {
 	if !isAuthMethodSupported(defaultAuthMethod) {
 		panic(fmt.Sprintf("server authentication method '%s' is not supported", defaultAuthMethod))
 	}
@@ -101,4 +101,12 @@ func isAuthMethodSupported(authMethod string) bool {
 
 func (s *Server) InvalidateCache(username string, host string) {
 	s.cacheShaPassword.Delete(fmt.Sprintf("%s@%s", username, host))
+}
+
+func (s *Server) SetCapability(cap uint32) {
+	s.capability |= cap
+}
+
+func (c *Server) UnsetCapability(cap uint32) {
+	c.capability &= ^cap
 }
