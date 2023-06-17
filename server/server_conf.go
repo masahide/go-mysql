@@ -83,7 +83,8 @@ func NewServer(serverVersion string, collationId uint8, defaultAuthMethod string
 	if tlsConfig != nil {
 		capFlag |= CLIENT_SSL
 	}
-	return &Server{
+
+	server := &Server{
 		serverVersion:     serverVersion,
 		protocolVersion:   10,
 		capability:        capFlag,
@@ -93,6 +94,11 @@ func NewServer(serverVersion string, collationId uint8, defaultAuthMethod string
 		tlsConfig:         tlsConfig,
 		cacheShaPassword:  new(sync.Map),
 	}
+	// Apply configuration functions.
+	for i := range options {
+		options[i](server)
+	}
+	return server
 }
 
 func isAuthMethodSupported(authMethod string) bool {
